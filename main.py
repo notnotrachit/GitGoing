@@ -1,6 +1,10 @@
+import os
 import streamlit as st
 import requests
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def get_weather(city, api_key):
     """
@@ -23,8 +27,7 @@ def main():
     # Basic input for city
     city = st.text_input("Enter City Name", "London")
     
-    # Placeholder for API key - This should be moved to environment variables
-    api_key = '5ea193f83497b91cd5cf1a285be71fe6'
+    api_key = os.getenv("API_KEY")
     
     if st.button("Get Weather"):
         if not api_key:
