@@ -28,7 +28,7 @@ def get_weather(city, api_key):
     except requests.HTTPError:
         # http error e.g. 400
         logging.exception("Failed to get weather data from OpenWeatherMap.")
-        st.error(f"Oops, e were unable to find weather data found for '{city}'! Please try again later.")
+        st.error(f"Oops, we were unable to find weather data found for '{city}'! Please try again later.")
         return {}
     except (requests.Timeout, requests.ConnectionError):
         # failed to connect or took too long
