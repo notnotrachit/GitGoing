@@ -24,7 +24,7 @@ def main():
     city = st.text_input("Enter City Name", "London")
     
     # Placeholder for API key - This should be moved to environment variables
-    api_key = st.text_input("Enter OpenWeatherMap API Key", type="password")
+    api_key = '5ea193f83497b91cd5cf1a285be71fe6'
     
     if st.button("Get Weather"):
         if not api_key:
