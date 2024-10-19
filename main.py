@@ -9,10 +9,17 @@ from dotenv import load_dotenv
 load_dotenv()
 logging.basicConfig(level=logging.INFO, filename="weather.log", format="%(asctime)s - %(levelname)s - %(message)s")
 
-def get_weather(city, api_key):
+def get_weather(city: str, api_key: str) -> dict:
     """
-    Get weather data from OpenWeatherMap API
-    Note: This function needs a valid API key to work
+    Get weather data about the given city from the OpenWeatherMap API
+
+    Args:
+        city: the city to get weather about
+        api_key: a *valid* api key for the OpenWeatherMap API
+
+    Returns:
+        a dictionary containing weather data about the given city, or
+        an empty dictionary if an error occurred
     """
     base_url = "http://api.openweathermap.org/data/2.5/weather"
     params = {
@@ -43,10 +50,14 @@ def get_weather(city, api_key):
 
     return response.json()
 
-def main():
+def main() -> None:
+    """
+    Main function that grabs weather data and runs the
+    Weather Dashboard Streamlit app.
+    """
     st.title("Weather Dashboard")
     
-    # Basic input for city
+    # basic input for city
     city = st.text_input("Enter City Name", "London")
     
     api_key = os.getenv("API_KEY")
@@ -55,14 +66,14 @@ def main():
         if not api_key:
             st.error("Please enter an API key")
             return
-            
+        
+        # get weather data
         weather_data = get_weather(city, api_key)
         if not weather_data:
-            # check we got weather data
             return
         
         try:
-            # Display basic weather information
+            # display basic weather information
             temp = weather_data["main"]["temp"]
             humidity = weather_data["main"]["humidity"]
             description = weather_data["weather"][0]["description"]
