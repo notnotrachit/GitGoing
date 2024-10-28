@@ -4,6 +4,7 @@ import requests
 import streamlit as st
 from datetime import datetime
 from dotenv import load_dotenv
+import time
 
 # load env variables & setup logging
 load_dotenv()
@@ -60,13 +61,13 @@ def main() -> None:
     # basic input for city
     city = st.text_input("Enter City Name", "London")
     
-    api_key = os.getenv("API_KEY")
-    
+    # Placeholder for API key - This should be moved to environment variables
+    api_key = os.getenv('API_KEY')
     if st.button("Get Weather"):
         if not api_key:
             st.error("Please enter an API key")
             return
-        
+
         # get weather data
         weather_data = get_weather(city, api_key)
         if not weather_data:
@@ -87,6 +88,5 @@ def main() -> None:
             st.error("Oops, some weather data is missing. Please try again later.")
             logging.exception("Failed to parse weather data.")
 
-            
 if __name__ == "__main__":
     main()
