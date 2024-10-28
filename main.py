@@ -3,6 +3,7 @@ import requests
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import time
 
 load_dotenv()
 
@@ -30,32 +31,35 @@ def main():
     # Placeholder for API key - This should be moved to environment variables
     api_key = os.getenv('API_KEY')
 
-    
     if st.button("Get Weather"):
         if not api_key:
             st.error("Please enter an API key")
             return
-            
-        try:
-            weather_data = get_weather(city, api_key)
-            
-            if weather_data.get("cod") != 200:
-                st.error(f"Error: {weather_data.get('message', 'Unknown error')}")
-                return
+        
+        # Display the spinner while the request is being processed
+        with st.spinner("Fetching weather data..."):
+            try:
+                time.sleep(1)  # Simulated delay
+                # Fetch weather data
+                weather_data = get_weather(city, api_key)
                 
-            # Display basic weather information
-            temp = weather_data["main"]["temp"]
-            humidity = weather_data["main"]["humidity"]
-            description = weather_data["weather"][0]["description"]
-            
-            st.write(f"Temperature: {temp}°C")
-            st.write(f"Humidity: {humidity}%")
-            st.write(f"Conditions: {description}")
-            
-        except requests.exceptions.RequestException:
-            st.error("Failed to fetch weather data. Please try again.")
-        except KeyError:
-            st.error("Error parsing weather data")
-            
+                if weather_data.get("cod") != 200:
+                    st.error(f"Error: {weather_data.get('message', 'Unknown error')}")
+                    return
+                    
+                # Display basic weather information
+                temp = weather_data["main"]["temp"]
+                humidity = weather_data["main"]["humidity"]
+                description = weather_data["weather"][0]["description"]
+                
+                st.write(f"Temperature: {temp}°C")
+                st.write(f"Humidity: {humidity}%")
+                st.write(f"Conditions: {description}")
+                
+            except requests.exceptions.RequestException:
+                st.error("Failed to fetch weather data. Please try again.")
+            except KeyError:
+                st.error("Error parsing weather data")
+
 if __name__ == "__main__":
     main()

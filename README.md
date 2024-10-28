@@ -39,7 +39,7 @@ pip install -r requirements.txt
 ### Running the App
 
 ```bash
-streamlit run app.py
+streamlit run main.py
 ```
 
 ## 🤝 Contributing
